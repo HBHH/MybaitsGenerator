@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.test.BoxerStarwishInfoDao">
+<resultMap id="baseResultMap" type="BoxerStarwishInfo"><id property="id" column="id"/>
+<result property="starwishBoxerId" column="starwish_boxer_id"/>
+<result property="starwishId" column="starwish_id"/>
+<result property="contentId" column="content_id"/>
+<result property="batchId" column="batch_id"/>
+<result property="placeType" column="place_type"/>
+<result property="hitTime" column="hit_time"/>
+<result property="openTime" column="open_time"/>
+<result property="receivedTime" column="received_time"/>
+<result property="timeoutTime" column="timeout_time"/>
+<result property="status" column="status"/>
+</resultMap>
+
+<sql id="baseColumns">id,starwish_boxer_id,starwish_id,content_id,batch_id,place_type,hit_time,open_time,received_time,timeout_time,status</sql>
+
+<select id="get" statementType="PREPARED" parameterType="java.lang.Long" resultMap="baseResultMap">
+SELECT <include refid="baseColumns" /> FROM xds_boxer_starwish_info WHERE id=#{id}</select>
+
+<insert id="add" statementType="PREPARED" parameterType="BoxerStarwishInfo">
+<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+SELECT LAST_INSERT_ID()</selectKey>
+INSERT INTO xds_boxer_starwish_info(starwish_boxer_id,starwish_id,content_id,batch_id,place_type,hit_time,open_time,received_time,timeout_time,status) VALUES(#{starwishBoxerId},#{starwishId},#{contentId},#{batchId},#{placeType},#{hitTime},#{openTime},#{receivedTime},#{timeoutTime},#{status})</insert>
+
+<insert id="addSelective" statementType="PREPARED" parameterType="BoxerStarwishInfo">
+<selectKey keyProperty="id" order="AFTER" resultType="java.lang.Long">
+SELECT LAST_INSERT_ID()</selectKey>INSERT INTO xds_boxer_starwish_info(<if test="starwishBoxerId != null">starwish_boxer_id,</if>
+<if test="starwishId != null">starwish_id,</if>
+<if test="contentId != null">content_id,</if>
+<if test="batchId != null">batch_id,</if>
+<if test="placeType != null">place_type,</if>
+<if test="hitTime != null">hit_time,</if>
+<if test="openTime != null">open_time,</if>
+<if test="receivedTime != null">received_time,</if>
+<if test="timeoutTime != null">timeout_time,</if>
+<if test="status != null">status,</if>
+CREATE_DATE) VALUES(<if test="starwishBoxerId != null">#{starwishBoxerId},</if>
+<if test="starwishId != null">#{starwishId},</if>
+<if test="contentId != null">#{contentId},</if>
+<if test="batchId != null">#{batchId},</if>
+<if test="placeType != null">#{placeType},</if>
+<if test="hitTime != null">#{hitTime},</if>
+<if test="openTime != null">#{openTime},</if>
+<if test="receivedTime != null">#{receivedTime},</if>
+<if test="timeoutTime != null">#{timeoutTime},</if>
+<if test="status != null">#{status},</if>
+#{createDate})</insert>
+
+<update id="update" statementType="PREPARED" parameterType="BoxerStarwishInfo">
+UPDATE xds_boxer_starwish_info SET starwish_boxer_id=#{starwishBoxerId},starwish_id=#{starwishId},content_id=#{contentId},batch_id=#{batchId},place_type=#{placeType},hit_time=#{hitTime},open_time=#{openTime},received_time=#{receivedTime},timeout_time=#{timeoutTime},status=#{status}
+WHERE id=#{id}
+</update>
+
+<update id="updateSelective" statementType="PREPARED" parameterType="BoxerStarwishInfo">
+UPDATE xds_boxer_starwish_info
+<set>
+<if test="starwishBoxerId != null">starwish_boxer_id=#{starwishBoxerId},</if>
+<if test="starwishId != null">starwish_id=#{starwishId},</if>
+<if test="contentId != null">content_id=#{contentId},</if>
+<if test="batchId != null">batch_id=#{batchId},</if>
+<if test="placeType != null">place_type=#{placeType},</if>
+<if test="hitTime != null">hit_time=#{hitTime},</if>
+<if test="openTime != null">open_time=#{openTime},</if>
+<if test="receivedTime != null">received_time=#{receivedTime},</if>
+<if test="timeoutTime != null">timeout_time=#{timeoutTime},</if>
+<if test="status != null">status=#{status},</if>
+</set>
+WHERE id=#{id}
+</update>
+
+<delete id="delete" statementType="PREPARED" parameterType="BoxerStarwishInfo">
+DELETE FROM xds_boxer_starwish_info WHERE id=#{id}
+</delete>
+
+<select id="getList" statementType="PREPARED" resultMap="baseResultMap">
+SELECT <include refid="baseColumns" /> FROM xds_boxer_starwish_info ORDER BY update_time
+</select>
+<select id="getCount" statementType="PREPARED" resultType="Integer">
+SELECT COUNT(*) FROM xds_boxer_starwish_info
+</select>
+</mapper>
