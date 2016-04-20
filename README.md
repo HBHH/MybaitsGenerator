@@ -22,7 +22,7 @@ String filterStr = "xds_"; 去除前缀
 
 // model xml daoImpl dao serviceImpl service
 boolean[] fileBooleanArr = new boolean[] { true, true, true, true, false, false };
-                                         model  xml   dao  daoimpl service serviceImpl
+                                           model  xml   dao  daoimpl service serviceImpl
                                          
                                          
 
